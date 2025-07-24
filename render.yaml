@@ -1,7 +1,6 @@
 services:
   - type: web
     name: laravel-restaurant-app
-    env: php
     region: singapore
     plan: free
     buildCommand: "composer install && php artisan migrate --force"
