@@ -1,0 +1,24 @@
+# Use an official PHP 8.2 image
+FROM php:8.2-cli
+
+# Install required system dependencies for Laravel
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libzip-dev \
+    && docker-php-ext-install pdo pdo_mysql zip
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy all the project files into the container
+COPY . .
+
+# Install composer dependencies
+RUN composer install --no-dev
+
+# Tell Render which port your app is listening on
+EXPOSE 10000
+
+# The command to run when the container starts
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
